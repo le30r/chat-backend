@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database: postgresql
+  liquibase:
+    change-log: classpath:/db/changelog/changelog.xml
+  security:
+    user:
+      name: user
+      password: user

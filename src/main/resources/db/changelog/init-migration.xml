@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="0" author="le30r">
+        <createTable tableName="users">
+            <column name="user_name" type="varchar"/>
+            <column name="level" type="int"/>
+        </createTable>
+        <createTable tableName="usage">
+            <column name="prompt_tokens" type="int"/>
+            <column name="completion_tokens" type="int"/>
+            <column name="user_id" type="varchar"/>
+        </createTable>
+        <createTable tableName="token">
+            <column name="data" type="varchar"/>
+            <column name="expires_at" type="timestamp"/>
+            <column name="created_by" type="varchar"/>
+            <column name="id" type="bigint"/>
+        </createTable>
+        <addPrimaryKey tableName="users" columnNames="user_name"/>
+        <addPrimaryKey tableName="usage" columnNames="user_id"/>
+        <addPrimaryKey tableName="token" columnNames="id"/>
+        <addForeignKeyConstraint baseTableName="usage" baseColumnNames="user_id"
+                                 constraintName="fk_usage_users" referencedTableName="users"
+                                 referencedColumnNames="user_name"/>
+        <addForeignKeyConstraint baseTableName="token" baseColumnNames="created_by"
+                                 constraintName="fk_token_users" referencedTableName="users"
+                                 referencedColumnNames="user_name"/>
+        <addAutoIncrement tableName="token" columnName="id"/>
+    </changeSet>
+</databaseChangeLog>
